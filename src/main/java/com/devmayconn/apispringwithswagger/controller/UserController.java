@@ -7,37 +7,39 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 
 @RestController
 @RequestMapping(path = "/users")
-@Api(value = "Endpoint de Users da API", description = "Endpoint de Users da API")
+@Tag(name = "Users", description = "Users controller API")
 public class UserController {
 
-    @ApiOperation(value = "Obter uma lista de Users", notes = "Retorna uma lista de users")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Operação realizada com sucesso"),
-            @ApiResponse(code = 404, message = "Não foram encontrados objetos"),
-            @ApiResponse(code = 401, message = "Unauthorized - Acesso não autorizado"),
-            @ApiResponse(code = 403, message = "Forbidden - Acesso negado")
-    })
+
+	@Operation(summary = "Obtém uma lista de users", description = "Obtém uma lista de users")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "OK - Operação realizada com sucesso"),
+			@ApiResponse(responseCode = "401", description = "Unauthorized - Acesso não autorizado"),
+			@ApiResponse(responseCode = "403", description = "Forbidden - Acesso negado"),
+			@ApiResponse(responseCode = "404", description = "Not Found - Recurso não encontrado")
+	})
     @GetMapping("/")
     public String getUsers() {
         return "Endpoint de teste";
     }
 
-    @ApiOperation(value = "Obter uma user por nome", notes = "Retorna um user pelo nome")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Operação realizada com sucesso"),
-            @ApiResponse(code = 404, message = "Não foram encontrados objetos"),
-            @ApiResponse(code = 401, message = "Unauthorized - Acesso não autorizado"),
-            @ApiResponse(code = 403, message = "Forbidden - Acesso negado")
-    })
+	@Operation(summary = "Obtém um usuário pelo nome", description = "Obtém um usuário pelo nome")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "OK - Operação realizada com sucesso"),
+			@ApiResponse(responseCode = "401", description = "Unauthorized - Acesso não autorizado"),
+			@ApiResponse(responseCode = "403", description = "Forbidden - Acesso negado"),
+			@ApiResponse(responseCode = "404", description = "Not Found - Recurso não encontrado")
+	})
     @GetMapping("/{name}")
     public String getUser(@PathVariable String name) {
-        return "Olá "+ name;
+        return "Olá "+ name + ", Seja bem vindo ao nosso sistema!!!!";
     }
 }
